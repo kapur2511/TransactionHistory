@@ -1,4 +1,4 @@
-package com.cba.transactions.repository
+package com.cba.transactions.data.repository
 
 class TransactionRepositoryImpl: TransactionRepository {
 

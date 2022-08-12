@@ -1,14 +1,14 @@
-package com.cba.transactions.data
+package com.cba.transactions.data.apimodels
 
 import com.google.gson.annotations.SerializedName
 
-data class AtmsItem(
+data class AtmsItemApiModel(
     @SerializedName("address")
     val address: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("location")
-    val location: Location,
+    val locationApiModel: LocationApiModel,
     @SerializedName("id")
     val id: String
 )

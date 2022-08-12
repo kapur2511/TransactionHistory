@@ -1,6 +1,6 @@
-package com.cba.transactions.api
+package com.cba.transactions.data.api
 
-import com.cba.transactions.data.TransactionResponse
+import com.cba.transactions.data.apimodels.TransactionResponseApiModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,5 +13,5 @@ interface TransactionApi {
     suspend fun getTransactions(
         @Query("dl")
         searchText: Int = 2
-    ): Response<TransactionResponse>
+    ): Response<TransactionResponseApiModel>
 }

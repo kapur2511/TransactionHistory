@@ -1,8 +1,8 @@
-package com.cba.transactions.data
+package com.cba.transactions.data.apimodels
 
 import com.google.gson.annotations.SerializedName
 
-data class Account(
+data class AccountApiModel(
     @SerializedName("bsb")
     val bsb: String,
     @SerializedName("balance")

@@ -1,4 +1,4 @@
-package com.cba.transactions.ui
+package com.cba.transactions.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
