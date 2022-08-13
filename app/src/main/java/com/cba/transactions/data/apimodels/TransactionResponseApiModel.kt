@@ -6,7 +6,7 @@ data class TransactionResponseApiModel(
     @SerializedName("atms")
     val atms: List<AtmsItemApiModel>?,
     @SerializedName("transactions")
-    val transactions: List<TransactionsItemApiModel>?,
+    val transactions: List<TransactionsItemApiModel>,
     @SerializedName("account")
     val accountApiModel: AccountApiModel
 )
