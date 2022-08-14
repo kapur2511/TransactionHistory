@@ -46,20 +46,23 @@ class TransactionRepositoryImpl @Inject constructor(
                             )
                         }
                         val accountHeaderModel = with(this.accountApiModel) {
-                            AccountHeaderModel(
+                            AccountHeaderUIModel(
                                 availableAmount = available,
-                                accountName = accountName,
                                 accountNumber = accountNumber,
                                 pendingAmount = totalPendingAmount.toString(),
                                 bsb = bsb,
                                 balance = balance
                             )
                         }
+                        val accountNameModel = AccountNameUIModel(
+                            accountName = this.accountApiModel.accountName
+                        )
                         SuccessResponseState(
                             data = TransactionResponseModel(
                                 listOfTransactions = listOfTransactions,
                                 listOfAtms = listOfAtms,
-                                accountHeaderModel = accountHeaderModel
+                                accountHeaderUIModel = accountHeaderModel,
+                                accountNameUIModel = accountNameModel
                             )
                         )
                     }

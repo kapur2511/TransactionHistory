@@ -6,5 +6,5 @@ data class TransactionModel(
     val transactionId: String,
     val description: String,
     val category: String,
-    val effectiveDate: String,
+    val effectiveDate: String
 )

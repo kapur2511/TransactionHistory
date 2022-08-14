@@ -28,6 +28,7 @@ class TransactionViewModel constructor(
     private fun getTransactions() {
         job?.cancel()
         job = viewModelScope.launch(ioCoroutineDispatcher) {
+            // show loader
             _transactionUiState.emit(
                 _transactionUiState.value.copy(
                     isLoading = true
