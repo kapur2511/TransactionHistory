@@ -1,7 +1,8 @@
-package com.cba.transactions.domain.viewmodel
+package com.cba.transactions.domain.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cba.transactions.di.IoDispatcher
 import com.cba.transactions.domain.uistate.TransactionUIState
 import com.cba.transactions.domain.usecase.FetchTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,11 +11,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class TransactionViewModel constructor(
+class TransactionViewModel @Inject constructor(
     private val fetchTransactionUseCase: FetchTransactionUseCase,
-    private val ioCoroutineDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioCoroutineDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private val _transactionUiState = MutableStateFlow(TransactionUIState())

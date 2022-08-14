@@ -3,23 +3,22 @@ package com.cba.transactions.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.cba.transactions.R
 import com.cba.transactions.databinding.ActivityMainBinding
-import com.cba.transactions.domain.viewmodel.TransactionViewModel
+import com.cba.transactions.domain.viewmodels.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionListActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModel: TransactionViewModel
+
+    private val viewModel by viewModels<TransactionViewModel>()
+
     private lateinit var viewBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

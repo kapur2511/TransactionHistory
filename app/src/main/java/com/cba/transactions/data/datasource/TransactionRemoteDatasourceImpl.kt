@@ -2,6 +2,7 @@ package com.cba.transactions.data.datasource
 
 import com.cba.transactions.data.api.TransactionApi
 import com.cba.transactions.data.apimodels.TransactionResponseApiModel
+import com.cba.transactions.di.IoDispatcher
 import com.cba.transactions.util.ErrorResponseState
 import com.cba.transactions.util.ResponseWrapper
 import com.cba.transactions.util.SuccessResponseState
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class TransactionRemoteDatasourceImpl @Inject constructor(
     private val transactionApi: TransactionApi,
-    private val ioCoroutineDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioCoroutineDispatcher: CoroutineDispatcher
 ): TransactionRemoteDatasource {
 
     override suspend fun getTransactions(): ResponseWrapper<TransactionResponseApiModel> {

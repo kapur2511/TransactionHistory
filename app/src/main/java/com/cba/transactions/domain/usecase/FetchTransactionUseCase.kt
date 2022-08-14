@@ -3,10 +3,10 @@ package com.cba.transactions.domain.usecase
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import com.cba.transactions.R
 import com.cba.transactions.data.repository.TransactionRepository
+import com.cba.transactions.di.IoDispatcher
 import com.cba.transactions.domain.models.*
 import com.cba.transactions.domain.uistate.TransactionUIState
 import com.cba.transactions.util.ErrorResponseState
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class FetchTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     suspend operator fun invoke() = withContext(ioDispatcher) {
