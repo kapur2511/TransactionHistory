@@ -17,7 +17,7 @@ import javax.inject.Inject
 class TransactionListActivity : AppCompatActivity() {
 
 
-    private val viewModel by viewModels<TransactionViewModel>()
+    private val viewModel: TransactionViewModel by viewModels()
 
     private lateinit var viewBinding: ActivityMainBinding
 

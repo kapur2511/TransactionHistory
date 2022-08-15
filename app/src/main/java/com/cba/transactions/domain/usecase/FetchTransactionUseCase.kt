@@ -4,6 +4,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.util.Log
 import com.cba.transactions.R
 import com.cba.transactions.data.repository.TransactionRepository
 import com.cba.transactions.di.IoDispatcher
@@ -50,6 +51,7 @@ class FetchTransactionUseCase @Inject constructor(
         val list = mutableListOf<BaseModel>()
         list.add(transactionResponseModel.accountHeaderUIModel)
 
+        Log.d(TAG, "$transactionResponseModel")
         val dateTransactionMap = hashMapOf<String, MutableList<TransactionModel>>()
         transactionResponseModel.listOfTransactions.forEach { transactionModel ->
             val date = transactionModel.effectiveDate
@@ -62,12 +64,15 @@ class FetchTransactionUseCase @Inject constructor(
             }
         }
 
+        Log.d(TAG, "Unsorted map: $dateTransactionMap")
         val sortedMap = dateTransactionMap.entries.sortedByDescending {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             sdf.parse(it.key)?.time
         }.associate {
             it.toPair()
         }
+
+        Log.d(TAG, "Sorted map: $sortedMap")
 
 
         sortedMap.forEach { entry ->
@@ -126,4 +131,7 @@ class FetchTransactionUseCase @Inject constructor(
         return list
     }
 
+    companion object {
+        private const val TAG = "FetchTransactionUseCase"
+    }
 }
