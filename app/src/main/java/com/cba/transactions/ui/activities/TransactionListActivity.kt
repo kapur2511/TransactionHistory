@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cba.transactions.databinding.ActivityMainBinding
 import com.cba.transactions.domain.models.AccountNameUIModel
 import com.cba.transactions.domain.models.BaseModel
-import com.cba.transactions.domain.viewmodels.TransactionViewModel
+import com.cba.transactions.viewmodels.TransactionViewModel
 import com.cba.transactions.ui.adapters.TransactionListAdapter
 import com.cba.transactions.ui.renderer.TransactionListUIRenderer
 import com.cba.transactions.ui.renderer.TransactionView

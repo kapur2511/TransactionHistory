@@ -14,9 +14,9 @@ import com.cba.transactions.util.ErrorResponseState
 import com.cba.transactions.util.SuccessResponseState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
@@ -28,10 +28,13 @@ class FetchTransactionUseCase @Inject constructor(
     suspend operator fun invoke() = withContext(ioDispatcher) {
         when (val result = transactionRepository.getTransactions()) {
             is SuccessResponseState -> {
+                val accountNameModel = AccountNameUIModel(
+                    accountName = result.data.accountModel.accountName
+                )
                 val listOfModels = getListOfModels(transactionResponseModel = result.data)
                 TransactionUIState(
                     list = listOfModels,
-                    accountName = result.data.accountNameUIModel,
+                    accountName = accountNameModel,
                     isLoading = false,
                     error = null
                 )
@@ -50,8 +53,44 @@ class FetchTransactionUseCase @Inject constructor(
     private fun getListOfModels(
         transactionResponseModel: TransactionResponseModel
     ): List<BaseModel> {
+        val formatter: DecimalFormat? = NumberFormat.getCurrencyInstance(Locale.getDefault()) as? DecimalFormat
+        // uncomment this for dynamic currency symbol based on locale
+        // val symbol = formatter?.currency?.symbol
+        formatter?.negativePrefix = "-$"
+        formatter?.negativeSuffix = ""
+
         val list = mutableListOf<BaseModel>()
-        list.add(transactionResponseModel.accountHeaderUIModel)
+        val accountHeaderUIModel = with(transactionResponseModel.accountModel) {
+            val bsb = "BSB "
+            val account = " Account "
+            val bsbString = SpannableStringBuilder(bsb)
+            bsbString.append(this.bsb)
+            bsbString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, bsb.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+
+            val accountString = SpannableStringBuilder(account)
+            accountString.append(this.accountNumber)
+            accountString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, account.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+
+            val balance = "Balance "
+            val balanceString = SpannableStringBuilder(balance)
+            balanceString.append("$${formatter?.format(this.balance.toDouble())}")
+            balanceString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), balance.length, balanceString.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+
+
+            val pending = "Pending "
+            val pendingString = SpannableStringBuilder(pending)
+            pendingString.append("${formatter?.format(transactionResponseModel.pendingAmount.toDouble())}")
+            pendingString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), pending.length, pendingString.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+
+            AccountHeaderUIModel(
+                availableAmount = "$$available",
+                pendingAmount = pendingString,
+                balance = balanceString,
+                accountNumberAndBsb = SpannableStringBuilder(bsbString)
+                    .append(accountString)
+            )
+        }
+        list.add(accountHeaderUIModel)
 
         Log.d(TAG, "$transactionResponseModel")
         val dateTransactionMap = hashMapOf<String, MutableList<TransactionModel>>()
@@ -80,11 +119,11 @@ class FetchTransactionUseCase @Inject constructor(
         sortedMap.forEach { entry ->
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val date = sdf.parse(entry.key)
-            val dateStringBuilder = StringBuilder()
+            val dateStringBuilder = SpannableStringBuilder()
             if (date != null) {
                 val sdfForUI = SimpleDateFormat("EEE dd MMM", Locale.getDefault())
                 dateStringBuilder.append(sdfForUI.format(date))
-
+                dateStringBuilder.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, dateStringBuilder.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
                 val diff: Long = Calendar.getInstance().time.time - date.time
                 val seconds = diff / 1000
                 val minutes = seconds / 60
@@ -93,7 +132,7 @@ class FetchTransactionUseCase @Inject constructor(
                 dateStringBuilder.append(" $days days ago")
             }
 
-            val dateModel = DateUIModel(date = dateStringBuilder.toString())
+            val dateModel = DateUIModel(date = dateStringBuilder)
             list.add(dateModel)
 
             entry.value.forEach { transactionModel ->
@@ -123,8 +162,8 @@ class FetchTransactionUseCase @Inject constructor(
                 list.add(
                     TransactionUIModel(
                         imageSrc = imageSrc,
-                        description = descriptionBuilder.toString(),
-                        amount = transactionModel.amount
+                        description = descriptionBuilder,
+                        amount = formatter?.format(transactionModel.amount.toDouble()) ?: "$${transactionModel.amount}"
                     )
                 )
             }

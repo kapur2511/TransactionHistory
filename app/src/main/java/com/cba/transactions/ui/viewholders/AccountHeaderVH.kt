@@ -13,7 +13,7 @@ class AccountHeaderVH(view: View): BaseViewHolder<AccountHeaderUIModel>(view) {
             tvAvailableAmount.text = data.availableAmount
             tvBalanceAmount.text = data.balance
             tvPendingAmount.text = data.pendingAmount
-            tvBsbAndAccount.text = "BSB ${data.bsb}  Account ${data.accountNumber}"
+            tvBsbAndAccount.text = data.accountNumberAndBsb
         }
     }
 }
