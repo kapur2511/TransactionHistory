@@ -12,4 +12,6 @@
     <dimen name="font_16">16sp</dimen>
     <dimen name="thirty_six_dp">36dp</dimen>
     <dimen name="four_dp">4dp</dimen>
+    <dimen name="two_hundred_dp">200dp</dimen>
+    <dimen name="sixty_four">64dp</dimen>
 </resources>

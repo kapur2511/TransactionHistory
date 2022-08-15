@@ -1,5 +1,6 @@
 package com.cba.transactions.domain.usecase
 
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -56,8 +57,12 @@ class FetchTransactionUseCase @Inject constructor(
         val formatter: DecimalFormat? = NumberFormat.getCurrencyInstance(Locale.getDefault()) as? DecimalFormat
         // uncomment this for dynamic currency symbol based on locale
         // val symbol = formatter?.currency?.symbol
-        formatter?.negativePrefix = "-$"
-        formatter?.negativeSuffix = ""
+        formatter?.apply {
+            negativePrefix = "-$"
+            negativeSuffix = ""
+            positivePrefix = "$"
+            positiveSuffix = ""
+        }
 
         val list = mutableListOf<BaseModel>()
         val accountHeaderUIModel = with(transactionResponseModel.accountModel) {
@@ -73,7 +78,7 @@ class FetchTransactionUseCase @Inject constructor(
 
             val balance = "Balance "
             val balanceString = SpannableStringBuilder(balance)
-            balanceString.append("$${formatter?.format(this.balance.toDouble())}")
+            balanceString.append("${formatter?.format(this.balance.toDouble())}")
             balanceString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), balance.length, balanceString.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
 
@@ -83,7 +88,7 @@ class FetchTransactionUseCase @Inject constructor(
             pendingString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), pending.length, pendingString.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
             AccountHeaderUIModel(
-                availableAmount = "$$available",
+                availableAmount = "${formatter?.format(this.available.toDouble())}",
                 pendingAmount = pendingString,
                 balance = balanceString,
                 accountNumberAndBsb = SpannableStringBuilder(bsbString)
@@ -153,12 +158,17 @@ class FetchTransactionUseCase @Inject constructor(
                 }
                 val descriptionBuilder = SpannableStringBuilder()
                 if (transactionModel.isPending) {
-                    val pendingText = "PENDING:"
+                    val pendingText = "PENDING: "
                     val spannableString = SpannableString(pendingText)
                     spannableString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, pendingText.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
                     descriptionBuilder.append(spannableString)
                 }
-                descriptionBuilder.append(" ${transactionModel.description}")
+                val htmlResult = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    Html.fromHtml(transactionModel.description, Html.FROM_HTML_MODE_LEGACY)
+                } else {
+                    Html.fromHtml(transactionModel.description)
+                }
+                descriptionBuilder.append(htmlResult)
                 list.add(
                     TransactionUIModel(
                         imageSrc = imageSrc,
@@ -168,7 +178,6 @@ class FetchTransactionUseCase @Inject constructor(
                 )
             }
         }
-
 
         return list
     }
