@@ -12,6 +12,6 @@ interface TransactionApi {
     @GET(GET_TRANSACTIONS_API)
     suspend fun getTransactions(
         @Query("dl")
-        searchText: Int = 2
+        searchText: Int = 1
     ): Response<TransactionResponseApiModel>
 }

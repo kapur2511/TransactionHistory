@@ -15,6 +15,8 @@ import com.cba.transactions.util.SuccessResponseState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
@@ -76,12 +78,13 @@ class FetchTransactionUseCase @Inject constructor(
 
 
         sortedMap.forEach { entry ->
-            val sdf = SimpleDateFormat("EEE-dd-MMM", Locale.getDefault())
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val date = sdf.parse(entry.key)
-
-            val dateStringBuilder = StringBuilder(sdf.format(entry.key))
-
+            val dateStringBuilder = StringBuilder()
             if (date != null) {
+                val sdfForUI = SimpleDateFormat("EEE dd MMM", Locale.getDefault())
+                dateStringBuilder.append(sdfForUI.format(date))
+
                 val diff: Long = Calendar.getInstance().time.time - date.time
                 val seconds = diff / 1000
                 val minutes = seconds / 60

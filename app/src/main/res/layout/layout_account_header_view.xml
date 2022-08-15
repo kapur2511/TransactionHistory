@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAvailableText"
+        android:text="@string/available_amount"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAvailableAmount"
+        tools:text="$49"
+        android:layout_marginTop="@dimen/eight_dp"
+        app:layout_constraintStart_toStartOf="@+id/tvAvailableText"
+        app:layout_constraintTop_toBottomOf="@+id/tvAvailableText"
+        app:layout_constraintEnd_toEndOf="@+id/tvAvailableText"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvBalanceAmount"
+        tools:text="$49"
+        android:layout_marginTop="@dimen/eight_dp"
+        app:layout_constraintStart_toStartOf="@+id/tvAvailableText"
+        app:layout_constraintTop_toBottomOf="@+id/tvAvailableAmount"
+        app:layout_constraintEnd_toEndOf="@+id/tvAvailableText"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPendingAmount"
+        tools:text="$49"
+        android:layout_marginTop="@dimen/eight_dp"
+        app:layout_constraintStart_toStartOf="@+id/tvAvailableText"
+        app:layout_constraintTop_toBottomOf="@+id/tvBalanceAmount"
+        app:layout_constraintEnd_toEndOf="@+id/tvAvailableText"/>
+
+
+    <View
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="@dimen/one_dp"
+        android:id="@+id/viewSeparator1"
+        android:background="@color/black"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPendingAmount"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvBsbAndAccount"
+        tools:text="BSB: 123 Account: 456"
+        android:layout_marginTop="@dimen/eight_dp"
+        app:layout_constraintStart_toStartOf="@+id/tvAvailableText"
+        app:layout_constraintTop_toBottomOf="@+id/viewSeparator1"
+        app:layout_constraintEnd_toEndOf="@+id/tvAvailableText"/>
+
+    <View
+        android:layout_width="@dimen/zero_dp"
+        android:layout_height="@dimen/one_dp"
+        android:id="@+id/viewSeparator2"
+        android:background="@color/black"
+        android:layout_marginTop="@dimen/eight_dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBsbAndAccount"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
