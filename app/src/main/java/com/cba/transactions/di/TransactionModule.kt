@@ -6,15 +6,13 @@ import com.cba.transactions.data.datasource.TransactionRemoteDatasourceImpl
 import com.cba.transactions.data.repository.TransactionRepository
 import com.cba.transactions.data.repository.TransactionRepositoryImpl
 import com.cba.transactions.domain.usecase.FetchTransactionUseCase
-import dagger.Binds
+import com.cba.transactions.domain.usecase.TransactionDetailsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -32,6 +30,16 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher
     ): FetchTransactionUseCase = FetchTransactionUseCase(
+        transactionRepository = transactionRepository,
+        ioDispatcher = coroutineDispatcher
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun providesTransactionDetailsUseCase(
+        transactionRepository: TransactionRepository,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): TransactionDetailsUseCase = TransactionDetailsUseCase(
         transactionRepository = transactionRepository,
         ioDispatcher = coroutineDispatcher
     )

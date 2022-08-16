@@ -1,4 +1,4 @@
-package com.cba.transactions.ui.renderer
+package com.cba.transactions.ui.transactionlist.renderer
 
 import com.cba.transactions.domain.models.AccountNameUIModel
 import com.cba.transactions.domain.models.BaseModel

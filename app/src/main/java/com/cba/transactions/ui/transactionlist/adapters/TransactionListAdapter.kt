@@ -1,4 +1,4 @@
-package com.cba.transactions.ui.adapters
+package com.cba.transactions.ui.transactionlist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +8,13 @@ import com.cba.transactions.domain.models.AccountHeaderUIModel
 import com.cba.transactions.domain.models.BaseModel
 import com.cba.transactions.domain.models.DateUIModel
 import com.cba.transactions.domain.models.TransactionUIModel
-import com.cba.transactions.ui.viewholders.*
+import com.cba.transactions.ui.transactionlist.interfaces.WidgetCallback
+import com.cba.transactions.ui.transactionlist.viewholders.*
 import java.lang.RuntimeException
 
-class TransactionListAdapter: RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
+class TransactionListAdapter(
+    private val widgetCallback: WidgetCallback
+): RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
 
     private val listOfModels = mutableListOf<BaseModel>()
 
@@ -32,7 +35,7 @@ class TransactionListAdapter: RecyclerView.Adapter<BaseViewHolder<BaseModel>>() 
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<BaseModel>, position: Int) {
-        holder.bind(listOfModels[position])
+        holder.bind(listOfModels[position], widgetCallback)
     }
 
     override fun getItemViewType(position: Int): Int {

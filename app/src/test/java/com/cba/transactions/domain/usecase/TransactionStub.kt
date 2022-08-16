@@ -24,11 +24,13 @@ object TransactionStub {
                     date = SpannableStringBuilder("2021-02-28")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-39"
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-39"
@@ -37,6 +39,7 @@ object TransactionStub {
                     date = SpannableStringBuilder("2021-02-27")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-39"
@@ -45,19 +48,13 @@ object TransactionStub {
                     date = SpannableStringBuilder("2021-02-25")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-39"
                 ),
                 TransactionUIModel(
-                    imageSrc = R.drawable.icon_category_uncategorised,
-                    description = SpannableStringBuilder("some random expense"),
-                    amount = "-39"
-                ),
-                DateUIModel(
-                    date = SpannableStringBuilder("2021-02-23")
-                ),
-                TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-39"
@@ -66,6 +63,16 @@ object TransactionStub {
                     date = SpannableStringBuilder("2021-02-23")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
+                    imageSrc = R.drawable.icon_category_uncategorised,
+                    description = SpannableStringBuilder("some random expense"),
+                    amount = "-39"
+                ),
+                DateUIModel(
+                    date = SpannableStringBuilder("2021-02-23")
+                ),
+                TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-39"

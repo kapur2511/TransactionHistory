@@ -24,11 +24,13 @@ object InstrumentationTransactionStub {
                     date = SpannableStringBuilder("Sun 28 Feb 534 days ago")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("PENDING: some random expense"),
                     amount = "-$39.00"
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("PENDING: some random expense"),
                     amount = "-$39.00"
@@ -37,6 +39,7 @@ object InstrumentationTransactionStub {
                     date = SpannableStringBuilder("Sat 27 Feb 535 days ago")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("PENDING: some random expense"),
                     amount = "-$39.00"
@@ -45,11 +48,13 @@ object InstrumentationTransactionStub {
                     date = SpannableStringBuilder("Thu 25 Feb 537 days ago")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("PENDING: some random expense"),
                     amount = "-$39.00"
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("PENDING: some random expense"),
                     amount = "-$39.00"
@@ -58,6 +63,7 @@ object InstrumentationTransactionStub {
                     date = SpannableStringBuilder("Tue 23 Feb 539 days ago")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-$39.00"
@@ -66,6 +72,7 @@ object InstrumentationTransactionStub {
                     date = SpannableStringBuilder("Mon 22 Feb 540 days ago")
                 ),
                 TransactionUIModel(
+                    transactionId = "quyiuy11",
                     imageSrc = R.drawable.icon_category_uncategorised,
                     description = SpannableStringBuilder("some random expense"),
                     amount = "-$39.00"

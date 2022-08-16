@@ -1,35 +1,38 @@
-package com.cba.transactions.ui.activities
+package com.cba.transactions.ui.transactionlist.activities
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cba.transactions.R
 import com.cba.transactions.databinding.ActivityMainBinding
 import com.cba.transactions.domain.models.AccountNameUIModel
 import com.cba.transactions.domain.models.BaseModel
+import com.cba.transactions.domain.models.TransactionUIModel
+import com.cba.transactions.ui.events.ToastEvent
+import com.cba.transactions.ui.events.TransactionDetailsEvent
+import com.cba.transactions.ui.transactiondetails.TransactionDetailsActivity
+import com.cba.transactions.ui.transactionlist.adapters.TransactionListAdapter
+import com.cba.transactions.ui.transactionlist.interfaces.WidgetCallback
+import com.cba.transactions.ui.transactionlist.renderer.TransactionListUIRenderer
+import com.cba.transactions.ui.transactionlist.renderer.TransactionView
 import com.cba.transactions.viewmodels.TransactionViewModel
-import com.cba.transactions.ui.adapters.TransactionListAdapter
-import com.cba.transactions.ui.renderer.TransactionListUIRenderer
-import com.cba.transactions.ui.renderer.TransactionView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.format.TextStyle
 
 @AndroidEntryPoint
-class TransactionListActivity : AppCompatActivity(), TransactionView {
+class TransactionListActivity : AppCompatActivity(), TransactionView, WidgetCallback {
 
 
     private val viewModel: TransactionViewModel by viewModels()
     private val transactionRenderer = TransactionListUIRenderer(this)
-    private val transactionAdapter = TransactionListAdapter()
+    private val transactionAdapter = TransactionListAdapter(this)
 
     private lateinit var viewBinding: ActivityMainBinding
 
@@ -38,6 +41,7 @@ class TransactionListActivity : AppCompatActivity(), TransactionView {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         setupUI()
+        setupUIEventListener()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.transactionUiState
@@ -45,6 +49,27 @@ class TransactionListActivity : AppCompatActivity(), TransactionView {
                         Log.d(TAG, "$it")
                         transactionRenderer.render(it)
                     }
+            }
+        }
+    }
+
+    private fun setupUIEventListener() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.eventFlow.collect{ event ->
+                when(event) {
+                    is TransactionDetailsEvent -> {
+                        val intent = Intent(this@TransactionListActivity, TransactionDetailsActivity::class.java)
+                        intent.putExtra(TransactionDetailsActivity.TRANSACTION_DETAIL_DATA, event.model)
+                        this@TransactionListActivity.startActivity(intent)
+                    }
+                    is ToastEvent -> {
+                        Toast.makeText(
+                            this@TransactionListActivity,
+                            event.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
         }
     }
@@ -90,6 +115,17 @@ class TransactionListActivity : AppCompatActivity(), TransactionView {
         }
     }
 
+    override fun onClick(model: BaseModel) {
+        when (model) {
+            is TransactionUIModel -> {
+                viewModel.navigateToTransactionDetails(
+                    transactionId = model.transactionId
+                )
+            }
+            // can handle other clicks over here
+            else -> {/*no-op*/}
+        }
+    }
 
     companion object {
         private const val TAG = "TransactionListActivity"

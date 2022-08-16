@@ -2,7 +2,10 @@ package com.cba.transactions.data.repository
 
 import com.cba.transactions.data.datasource.TransactionRemoteDatasource
 import com.cba.transactions.di.IoDispatcher
-import com.cba.transactions.domain.models.*
+import com.cba.transactions.domain.models.AtmModel
+import com.cba.transactions.domain.models.LatLng
+import com.cba.transactions.domain.models.TransactionModel
+import com.cba.transactions.domain.models.TransactionResponseModel
 import com.cba.transactions.util.ErrorResponseState
 import com.cba.transactions.util.ResponseWrapper
 import com.cba.transactions.util.SuccessResponseState
@@ -14,6 +17,8 @@ class TransactionRepositoryImpl @Inject constructor(
     private val transactionRemoteDatasource: TransactionRemoteDatasource,
     @IoDispatcher private val ioCoroutineDispatcher: CoroutineDispatcher
 ): TransactionRepository {
+
+    private var inMemoryCache: TransactionResponseModel? = null
 
     override suspend fun getTransactions(): ResponseWrapper<TransactionResponseModel> {
         return withContext(ioCoroutineDispatcher) {
@@ -46,13 +51,15 @@ class TransactionRepositoryImpl @Inject constructor(
                                 name = atmsItemApiModel.name
                             )
                         }
+                        val transactionResponseModel = TransactionResponseModel(
+                            listOfTransactions = listOfTransactions,
+                            listOfAtms = listOfAtms,
+                            accountModel = accountApiModel,
+                            pendingAmount = totalPendingAmount.toString()
+                        )
+                        inMemoryCache = transactionResponseModel
                         SuccessResponseState(
-                            data = TransactionResponseModel(
-                                listOfTransactions = listOfTransactions,
-                                listOfAtms = listOfAtms,
-                                accountModel = accountApiModel,
-                                pendingAmount = totalPendingAmount.toString()
-                            )
+                            data = transactionResponseModel
                         )
                     }
                 }
@@ -62,6 +69,12 @@ class TransactionRepositoryImpl @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    override suspend fun getTransactionModel(transactionId: String): TransactionModel? {
+        return inMemoryCache?.listOfTransactions?.find {
+            it.transactionId == transactionId
         }
     }
 }

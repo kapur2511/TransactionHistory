@@ -3,6 +3,7 @@ package com.cba.transactions.domain.models
 import android.text.SpannableStringBuilder
 
 data class TransactionUIModel(
+    val transactionId: String,
     val imageSrc: Int,
     val description: SpannableStringBuilder,
     val amount: String
@@ -12,7 +13,8 @@ data class TransactionUIModel(
         return other is TransactionUIModel &&
                 other.imageSrc == imageSrc &&
                 other.description.toString() == description.toString() &&
-                other.amount == amount
+                other.amount == amount &&
+                other.transactionId == transactionId
     }
 
     override fun hashCode(): Int {

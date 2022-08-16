@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.TransactionListActivity">
+    tools:context=".ui.transactionlist.activities.TransactionListActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         android:layout_width="@dimen/sixty_four"
         android:layout_height="@dimen/sixty_four"
         android:id="@+id/progressBar"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"

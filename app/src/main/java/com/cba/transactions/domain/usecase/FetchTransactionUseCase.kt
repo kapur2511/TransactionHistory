@@ -200,6 +200,7 @@ class FetchTransactionUseCase @Inject constructor(
         }
         descriptionBuilder.append(htmlResult)
         return TransactionUIModel(
+            transactionId = transactionModel.transactionId,
             imageSrc = imageSrc,
             description = descriptionBuilder,
             amount = formatter?.format(transactionModel.amount.toDouble()) ?: "$${transactionModel.amount}"

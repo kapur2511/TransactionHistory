@@ -1,5 +1,9 @@
 package com.cba.transactions.domain.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class TransactionModel(
     val isPending: Boolean,
     val amount: String,
@@ -7,4 +11,4 @@ data class TransactionModel(
     val description: String,
     val category: String,
     val effectiveDate: String
-)
+): Parcelable
