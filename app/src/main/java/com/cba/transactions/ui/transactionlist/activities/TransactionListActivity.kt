@@ -42,6 +42,7 @@ class TransactionListActivity : AppCompatActivity(), TransactionView, WidgetCall
         setContentView(viewBinding.root)
         setupUI()
         setupUIEventListener()
+        setupSwipeRefreshLayout()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.transactionUiState
@@ -49,6 +50,15 @@ class TransactionListActivity : AppCompatActivity(), TransactionView, WidgetCall
                         Log.d(TAG, "$it")
                         transactionRenderer.render(it)
                     }
+            }
+        }
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        with(viewBinding.swipeRefreshLayout) {
+            setOnRefreshListener {
+                isRefreshing = false
+                viewModel.getTransactions()
             }
         }
     }
