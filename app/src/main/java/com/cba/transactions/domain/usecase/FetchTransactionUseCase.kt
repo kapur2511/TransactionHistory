@@ -110,22 +110,22 @@ class FetchTransactionUseCase @Inject constructor(
             val account = " Account "
             val bsbString = SpannableStringBuilder(bsb)
             bsbString.append(this.bsb)
-            bsbString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, bsb.length, android.text.Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            bsbString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, bsb.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
             val accountString = SpannableStringBuilder(account)
             accountString.append(this.accountNumber)
-            accountString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, account.length, android.text.Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            accountString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0, account.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
             val balance = "Balance "
             val balanceString = SpannableStringBuilder(balance)
             balanceString.append("${formatter?.format(this.balance.toDouble())}")
-            balanceString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), balance.length, balanceString.length, android.text.Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            balanceString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), balance.length, balanceString.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
 
             val pending = "Pending "
             val pendingString = SpannableStringBuilder(pending)
             pendingString.append("${formatter?.format(transactionResponseModel.pendingAmount.toDouble())}")
-            pendingString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), pending.length, pendingString.length, android.text.Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            pendingString.setSpan(StyleSpan(android.graphics.Typeface.BOLD), pending.length, pendingString.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
             AccountHeaderUIModel(
                 availableAmount = "${formatter?.format(this.available.toDouble())}",

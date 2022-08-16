@@ -1,5 +1,6 @@
 package com.cba.transactions.data.repository
 
+import com.cba.transactions.data.apimodels.TransactionResponseApiModel
 import com.cba.transactions.data.datasource.TransactionRemoteDatasource
 import com.cba.transactions.di.IoDispatcher
 import com.cba.transactions.domain.models.AtmModel
@@ -40,17 +41,7 @@ class TransactionRepositoryImpl @Inject constructor(
                                 description = transactionApiModel.description
                             )
                         }
-                        val listOfAtms = this.atms?.map { atmsItemApiModel ->
-                            AtmModel(
-                                atmId = atmsItemApiModel.id,
-                                address = atmsItemApiModel.address,
-                                location = LatLng(
-                                    lat = atmsItemApiModel.locationApiModel.lat,
-                                    lng = atmsItemApiModel.locationApiModel.lon
-                                ),
-                                name = atmsItemApiModel.name
-                            )
-                        }
+                        val listOfAtms = mapToAtmModels(transactionResponseApiModel = this)
                         val transactionResponseModel = TransactionResponseModel(
                             listOfTransactions = listOfTransactions,
                             listOfAtms = listOfAtms,
@@ -69,6 +60,22 @@ class TransactionRepositoryImpl @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    private fun mapToAtmModels(
+        transactionResponseApiModel: TransactionResponseApiModel
+    ): List<AtmModel>? {
+        return transactionResponseApiModel.atms?.map { atmsItemApiModel ->
+            AtmModel(
+                atmId = atmsItemApiModel.id,
+                address = atmsItemApiModel.address,
+                location = LatLng(
+                    lat = atmsItemApiModel.locationApiModel.lat,
+                    lng = atmsItemApiModel.locationApiModel.lon
+                ),
+                name = atmsItemApiModel.name
+            )
         }
     }
 

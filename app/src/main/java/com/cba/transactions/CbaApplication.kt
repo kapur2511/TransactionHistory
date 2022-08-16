@@ -6,7 +6,4 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class CbaApplication: Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-    }
 }
