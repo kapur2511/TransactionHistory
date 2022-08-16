@@ -4,4 +4,14 @@ import android.text.SpannableStringBuilder
 
 data class DateUIModel(
     val date: SpannableStringBuilder
-): BaseModel
+): BaseModel {
+
+    override fun equals(other: Any?): Boolean {
+        return other is DateUIModel &&
+                other.date.toString() == date.toString()
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+}

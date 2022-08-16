@@ -7,4 +7,16 @@ data class AccountHeaderUIModel(
     val balance: SpannableStringBuilder,
     val accountNumberAndBsb: SpannableStringBuilder,
     val pendingAmount: SpannableStringBuilder
-): BaseModel
+): BaseModel {
+
+    override fun equals(other: Any?): Boolean {
+        return other is AccountHeaderUIModel &&
+        other.availableAmount == availableAmount &&
+        other.pendingAmount.toString() == pendingAmount.toString() &&
+        other.accountNumberAndBsb.toString() == accountNumberAndBsb.toString()
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+}

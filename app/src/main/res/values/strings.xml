@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">CBA Transactions</string>
     <string name="available_amount">Available</string>
     <string name="retry">Retry</string>
 </resources>
